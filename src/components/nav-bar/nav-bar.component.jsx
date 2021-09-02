@@ -9,7 +9,7 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 
 import './nav-bar.styles.scss';
 
-const NavBar = ({ currentUser }) => (
+const NavBar = ({ currentUser, hidden }) => (
   <div className="nav-bar">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -32,12 +32,13 @@ const NavBar = ({ currentUser }) => (
       )}
       <CartIcon />
     </div>
-    <CartDropdown />
+    {hidden ? null : <CartDropdown />}
   </div>
 );
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+  currentUser,
+  hidden,
 });
 
 export default connect(mapStateToProps)(NavBar);
